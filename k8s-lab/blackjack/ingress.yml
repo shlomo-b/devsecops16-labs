@@ -1,0 +1,37 @@
+# for working with alb type application you need to install helm and install the ingress controller aws.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: blackjack
+  namespace: blackjack # the namespace that sperate the pods  between envroments.
+
+spec:
+  ingressClassName: nginx
+  rules:
+  # those rules for the application to allow the metrics/presentation/and the application
+    - host: blackjack1.internal.com
+    - http:
+        paths:
+          - path: /metrics
+            pathType: Prefix
+            backend:
+              service:
+                name: blackjack
+                port:
+                  number: 80
+
+          - path: /presentation
+            pathType: Prefix
+            backend:
+              service:
+                name: blackjack
+                port:
+                  number: 80
+                  
+          - path: /
+            pathType: Exact # allow only access to application
+            backend:
+              service:
+                name: blackjack
+                port:
+                  number: 80

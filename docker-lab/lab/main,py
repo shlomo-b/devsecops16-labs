@@ -1,0 +1,49 @@
+from flask import Flask, request
+
+app = Flask(__name__)
+
+# foods = ["pizza", "pasta", "hamoger", "milk"]
+foods = [
+    {'id': 1, 'name': 'pizza', 'price': 60.0},
+    {'id': 2, 'name': 'sushi', 'price': 38.0},
+    {'id': 3, 'name': 'flafel', 'price': 28.0}
+]
+
+
+# get all food
+@app.get('/')
+def get_all_foods():
+    return foods
+
+
+# add new food
+@app.post('/add')
+def add_food():
+    data = request.json
+    data['id'] = foods[-1]['id'] + 1
+    foods.append(data)
+    return 'added !!!'
+
+
+# delete value
+@app.delete('/id/<int:id>')
+def delete_food(id):
+    for food in foods:
+        if food['id'] == id:
+            foods.remove(food)
+            return 'deleted !!!', 200
+    return 'no foods to delete'
+
+
+# replace values
+# @app.route('/foods', methods=['PUT'])
+# def replace():
+#     for food in foods:
+#         if food == "shkshuka":
+#             food.replace("shkshuka", "alina_love_food")
+#             print(food)
+#     return "susschfule shkshuka replace", 201
+
+
+if __name__ == '__main__':
+    app.run(port=80, host='0.0.0.0')

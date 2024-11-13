@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guest-number-game
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: guest-number-game
+  template:
+    metadata:
+      labels:
+        app: guest-number-game
+    spec:
+      containers:
+      - name: guest-number-game
+        image: shlomobarzili/guest-number-game
+        ports:
+        - containerPort: 80  # Ensure this matches the port your app is listening on
