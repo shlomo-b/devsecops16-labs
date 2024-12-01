@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: tomer-lab4
+  name: mongo-deployment
+  labels:
+    app: mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo
+        image: shlomobarzili/lab4-mongo:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 27017
+          protocol: TCP
+        env:
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: configmap
+                key: MONGO_INITDB_ROOT_PASSWORD
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                name: configmap
+                key: MONGO_INITDB_ROOT_USERNAME
+          - name: MONGO_DB_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: configmap
+                key: MONGO_DB_HOST

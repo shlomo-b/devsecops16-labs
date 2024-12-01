@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: tomer-lab4
+  name: configmap
+data:
+  REACT_APP_API_URL: http://192.168.49.2:31250
+  MONGO_DB_HOST: mongo
+  MONGO_INITDB_ROOT_USERNAME: root
+  MONGO_INITDB_ROOT_PASSWORD: example
+    
