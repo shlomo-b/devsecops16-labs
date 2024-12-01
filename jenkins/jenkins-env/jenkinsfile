@@ -1,0 +1,24 @@
+pipeline{
+    agent any
+    environment{
+        REPO_NMAE = "https://github.com/danielyaba/argocd-app-of-apps.git"
+    }
+    stages{
+        stage("A"){
+            steps{
+                echo "print the number $BUILD_NUMBER"
+                sh "git clone  $REPO_NMAE"
+            }
+            post{
+                success{
+                    echo "success"
+                }
+            }
+        }
+        stage("B"){
+            steps{
+                echo "testing the application"
+            }
+        }
+    }
+}

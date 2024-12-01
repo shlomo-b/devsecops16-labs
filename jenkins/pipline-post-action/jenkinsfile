@@ -1,0 +1,38 @@
+pipeline{
+    agent any
+    stages{
+        stage("A"){
+            steps{
+                echo "building the application"
+            }
+            post{
+                success{
+                    echo "success"
+                }
+            }
+        }
+        stage("B"){
+            steps{
+                echo "testing the application"
+                sh 'figlet "hello world"'
+            }
+            post{
+                failure{
+                    echo "apt update &&  apt install figlet"
+                }
+            }
+        }
+    }
+    post{
+        success{
+            echo "success"
+        }
+        failure{
+            echo "failure"
+        }
+        always{
+            echo "always"
+        }
+        
+    }
+}

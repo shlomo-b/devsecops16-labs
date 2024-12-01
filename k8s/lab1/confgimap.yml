@@ -9,5 +9,4 @@ data:
     DATABASE_USER: postgares
     DATABASE_PASSOWRDS: hodi
     REACT_APP_API_URL: "url data base"
-
    

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blackjack
+  namespace: blackjack
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: blackjack
+  template:
+    metadata:
+      labels:
+        app: blackjack
+    spec:
+      containers:
+        - name: blackjack
+          image: shlomobarzili/blackjack:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 80  # Ensure this matches the port your app is listening on

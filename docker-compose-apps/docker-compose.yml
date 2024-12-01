@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  jenkins-server:
+    build: ./jenkins
+    container_name: jenkins-server
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+
+      # The volume /var/run/docker.sock:/var/run/docker.sock:
+      # This connects the Docker socket from the host machine to the Jenkins container.
+      # This connection allows Jenkins to execute Docker commands from within the container, such as:
+      # Building images using docker build.
+      # unning containers with docker run.
+      # Managing Docker in general (e.g., docker ps, docker stop, etc.).
+      # docker daemon its running only in host machine
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+    restart: unless-stopped
+
+volumes:
+  jenkins_home:
+    external: true

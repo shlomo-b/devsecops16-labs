@@ -1,0 +1,12 @@
+pipeline {
+    agent any
+    stages {
+        stage("Run AWS Command") {
+            steps {
+                withAWS(credentials: 'jenkins', region: 'eu-west-1') {
+                    sh 'aws sts get-caller-identity'
+                }
+            }
+        }
+    }
+}
